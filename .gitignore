@@ -259,3 +259,21 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+
+/litclassic/BookDBConnect.cs
+BookDBConnect.cs
+
+/litclassic/WordsDBConnect.cs
+WordsDBConnect.cs
+
+/litclassic/BooksDataSet.xsd
+BooksDataSet.xsd
+
+/litclassic/BooksDataSet.xss
+BooksDataSet.xss
+
+/litclassic/BooksDataSet.xsc
+BooksDataSet.xsc
+
+/litclassic/BooksDataSet.Designer.cs
+BooksDataSet.Designer.cs
