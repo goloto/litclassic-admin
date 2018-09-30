@@ -1019,6 +1019,7 @@ namespace litclassic
                         || /*Достоевский, 11 т.*/ (titleString.ToLower() == "\"1862\"")
                         || /*Достоевский, 11 т.*/ (titleString.ToLower() == "\"1863\"")
                         || /*Достоевский, 11 т.*/ (titleString.ToLower() == "\"1864\"")
+                        || /*Крылов, 1 т.*/ (titleString.ToLower() == "\"предисловие и примечания в «зрителе»\"")
 
                         // приписываемое
                         || (titleString.ToLower().IndexOf("приписываемые") != -1)
@@ -1045,7 +1046,7 @@ namespace litclassic
                     {
                         // сделано для того, чтобы отделить материал с таким названием 
                         // от разделов в примечании с этим же названием
-                        if (line.GetThemeType() != 3) line.SetThemeType(1);
+                        if (line.GetThemeType() != 3)   line.SetThemeType(1);
                     }
                     else if // осн.разделы
                         ((titleString.ToLower() == "\"комментарии\"")                       
@@ -1057,6 +1058,7 @@ namespace litclassic
                         // описания составителей
                         || /*Гоголь, 10 т.*/ (titleString.ToLower().IndexOf("даты жизни гоголя") != -1)
                         || /*Одоевский, записки дл.м.правнука*/ (titleString.ToLower().IndexOf("одоевский в критике") != -1)
+                        || /*Крылов, 3 т.*/ (titleString.ToLower() == "\"варианты и примечания\"")
 
                         // фамилии редакции
                         || (titleString.ToLower().IndexOf("и.м. семенко") != -1)
