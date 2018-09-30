@@ -954,14 +954,18 @@ namespace litclassic
                         || /*Аксаков, 5 т.*/ (titleString.ToLower() == "\"рассказы и воспоминания охотника о разных охотах\"")
                         || /*Аксаков, 5 т.*/ (titleString.ToLower() == "\"новые охотничьи заметки\"")
 
-                        // "Дневник Писателя"
-                        || (titleString.ToLower() == "\"1860\"")
-                        || (titleString.ToLower() == "\"1861\"")
-                        || (titleString.ToLower() == "\"1862\"")
-                        || (titleString.ToLower() == "\"1863\"")
-                        || (titleString.ToLower() == "\"1864\""))
+                        || /*Достоевский, 1 т.*/ (titleString.ToLower() == "\"роман в девяти письмах\"")
+                        || /*Достоевский, 4 т.*/ (titleString.ToLower() == "\"зимние заметки о летних впечатлениях\"")
+                        || /*Достоевский, 12 т.*/ (titleString.ToLower().IndexOf("дневник писателя") != -1)
+                        || /*Достоевский, 12 т.*/ (titleString.ToLower() == "\"полписьма «одного лица»\"")
+                        || /*Достоевский, 13 т.*/ (titleString.ToLower().IndexOf("из частного письма") != -1)
+                        || /*Достоевский, 14 т.*/ (titleString.ToLower().IndexOf(" русская сатира.") != -1)
+                        || /*Достоевский, 14 т.*/ (titleString.ToLower().IndexOf("об анонимных ругательных письмах") != -1))
                     {
-                        line.SetThemeType(0);
+                        // сделано для того, чтобы отделить сами произведения с таким названием 
+                        // от разделов в примечании с этим же названием
+                        if ((line.GetThemeType() == 1) || (line.GetThemeType() == 0))
+                            line.SetThemeType(0);
                     }
                     else if  // приложения
                         ((titleString.ToLower().IndexOf("приложение") != -1)
@@ -984,6 +988,7 @@ namespace litclassic
                         || (titleString.ToLower().IndexOf("незавершенные произведения") != -1)
                         || (titleString.ToLower() == "\"мертвые души. том второй\"")
                         || (titleString.ToLower().IndexOf("отрывки") != -1)
+                        || /*Достоевский, 10 т.*/ (titleString.ToLower() == "\"братья карамазовы. том 2\"")
 
                         // заметки
                         || (titleString.ToLower().IndexOf("заметки") != -1)
@@ -1006,6 +1011,11 @@ namespace litclassic
                         || (titleString.ToLower().IndexOf("деловые бумаги") != -1)
                         || (titleString.ToLower().IndexOf("материалы по географии") != -1)
                         || (titleString.ToLower().IndexOf("материалы для словаря") != -1)
+                        || /*Достоевский, 11 т.*/ (titleString.ToLower() == "\"1860\"")
+                        || /*Достоевский, 11 т.*/ (titleString.ToLower() == "\"1861\"")
+                        || /*Достоевский, 11 т.*/ (titleString.ToLower() == "\"1862\"")
+                        || /*Достоевский, 11 т.*/ (titleString.ToLower() == "\"1863\"")
+                        || /*Достоевский, 11 т.*/ (titleString.ToLower() == "\"1864\"")
 
                         // приписываемое
                         || (titleString.ToLower().IndexOf("приписываемые") != -1)
@@ -1030,7 +1040,9 @@ namespace litclassic
                         || /*из Пушкина, 8 т.*/ (titleString.ToLower().IndexOf("замечания о бунте") != -1)
                         || /*из Пушкина, 9 т.*/ (titleString.ToLower().IndexOf("история петра") != -1))                                                
                     {
-                        line.SetThemeType(1);
+                        // сделано для того, чтобы отделить материал с таким названием 
+                        // от разделов в примечании с этим же названием
+                        if (line.GetThemeType() != 3) line.SetThemeType(1);
                     }
                     else if // осн.разделы
                         ((titleString.ToLower() == "\"комментарии\"")                       
