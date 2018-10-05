@@ -963,12 +963,24 @@ namespace litclassic
                         || /*Достоевский, 14 т.*/ (titleString.ToLower().IndexOf("об анонимных ругательных письмах") != -1)
 
                         || /*Жуковский, 1 т.*/ (titleString.ToLower() == "\"к тургеневу, в ответ на стихи, присланные им вместо письма\"")
-                        || /*Жуковский, 3 т.*/ (titleString.ToLower() == "\"отрывки из «илиады»\""))
+                        || /*Жуковский, 3 т.*/ (titleString.ToLower() == "\"отрывки из «илиады»\"")
+
+                        || /*Пушкин, 1 т.*/ (titleString.ToLower() == "\"из письма к кн. п.а. вяземскому\"")
+                        || /*Пушкин, 1 т.*/ (titleString.ToLower() == "\"из письма к в.л. пушкину\""))
                     {
                         // сделано для того, чтобы отделить сами произведения с таким названием 
                         // от разделов в примечании с этим же названием
                         if ((line.GetThemeType() == 1) || (line.GetThemeType() == 0))
                             line.SetThemeType(0);
+                    }
+                    // сделано для того, чтобы отделить сами произведения с таким названием 
+                    // от разделов в примечании с этим же названием
+                    else if 
+                        /*Пушкин, 1 т.*/ (titleString.ToLower() == "\"воспоминания в царском селе\"")
+                    {
+                        if (line.GetThemeType() == 0)
+                            line.SetThemeType(0);
+                        else line.SetThemeType(1);
                     }
                     else if  // приложения
                         ((titleString.ToLower().IndexOf("приложение") != -1)
@@ -1087,7 +1099,7 @@ namespace litclassic
 
                         // иллюстрации
                         || (titleString.ToLower() == "\"иллюстрации\"")
-                        || (titleString.ToLower().IndexOf("перечень иллюстраций") != -1)
+                        || /*Пушкин, 1 т.*/ (titleString.ToLower().IndexOf("перечень иллюстраций") != -1)
 
                         // указатели
                         || (titleString.ToLower().IndexOf("указатель") != -1)
@@ -1109,9 +1121,11 @@ namespace litclassic
                         || (titleString.ToLower() == "\"сокращённые обозначения источников\"")
                         || /*Тютчев, 1 т.*/ (titleString.ToLower() == "условные сокращения")
 
-                        || (titleString.ToLower().IndexOf("переводы") != -1)                     
-                        
-                        || (titleString.ToLower().IndexOf("содержание") != -1)
+                        // переводы
+                        || (titleString.ToLower().IndexOf("переводы") != -1)
+                        || /*Пушкин, 1 т.*/ (titleString.ToLower() == "переводы иноязычных текстов")
+
+                        || /*Пушкин, 1 т.*/ (titleString.ToLower().IndexOf("содержание") != -1)
 
                         // авторские заметки, но не читаемые
                         || /*Пушкин, 7 т.*/ (titleString.ToLower().IndexOf("заметки на полях") != -1)                       
@@ -1121,6 +1135,80 @@ namespace litclassic
                         || /*Тютчев, 3 т.*/ (titleString.ToLower() == "\"публицистические произведения, написанные на французском языке\""))
                     {
                         line.SetThemeType(3);
+                    }
+                    // Пушкинские исключения
+                    else if
+                        ((titleString.ToLower().IndexOf("гавриилиада") != -1)
+                        || (titleString.ToLower().IndexOf("граф нулин") != -1)
+                        || /*1 том*/ (titleString.ToLower() == "\"монах\"")
+                        || (titleString.ToLower().IndexOf("царь никита и сорок его дочерей") != -1)
+                        || /*1 том*/ (titleString.ToLower() == "\"красавице, которая нюхала табак\"")
+                        || (titleString.ToLower().IndexOf("от всенощной вечор идя домой") != -1)
+                        || /*1 том*/ (titleString.ToLower() == "\"юрьеву\"")
+                        || /*1 том*/ (titleString.ToLower() == "\"ты и я\"")
+                        || /*1 том*/ (titleString.ToLower() == "\"вишня\"")
+                        //|| /*1 том*/ (titleString.ToLower() == "\"дельвигу\"")
+                        || (titleString.ToLower().IndexOf("христос воскрес") != -1)
+                        || (titleString.ToLower().IndexOf("десятая заповедь") != -1)
+                        || (titleString.ToLower().IndexOf("раззевавшись от обедни") != -1)
+                        || (titleString.ToLower().IndexOf("мой друг, уже три дня") != -1)
+                        || (titleString.ToLower().IndexOf("из письма к вигелю") != -1)
+                        || (titleString.ToLower().IndexOf("телега жизни") != -1)
+                        || (titleString.ToLower().IndexOf("«мне жаль великия жены»") != -1)
+                        || (titleString.ToLower().IndexOf("рефутация г-на беранжера") != -1)
+                        || (titleString.ToLower().IndexOf("к кастрату раз пришел скрыпач") != -1)
+                        // следует ли включать в список эпиграммы вообще?
+                        || (titleString.ToLower().IndexOf("эпиграммы") != -1)
+                        || /*1 том*/ (titleString.ToLower() == "\"сравнение\"")
+                        || /*1 том*/ (titleString.ToLower().IndexOf("орлов с истоминой в постеле") != -1)
+                        || /*1 том*/ (titleString.ToLower() == "\"на каченовского\"")
+                        || /*1 том*/ (titleString.ToLower() == "\"на стурдзу\"")
+                        || /*1 том*/ (titleString.ToLower() == "\"на аракчеева\"")
+                        || (titleString.ToLower().IndexOf("на кн. а.н.голицына") != -1)
+                        || /*1 том*/ (titleString.ToLower() == "\"нимфодоре семеновой\"")
+                        || /*1 том*/ (titleString.ToLower().IndexOf("она тогда ко мне придет") != -1)
+                        || /*1 том*/ (titleString.ToLower() == "\"на к. дембровского\"")
+                        || (titleString.ToLower().IndexOf("иной имел мою аглаю") != -1)
+                        || (titleString.ToLower().IndexOf("к сабурову") != -1)
+                        || (titleString.ToLower().IndexOf("анне н.вульф") != -1)
+                        || (titleString.ToLower().IndexOf("разговор фотия с гр. орловой") != -1)
+                        || (titleString.ToLower().IndexOf("накажи, святой угодник") != -1)
+                        || (titleString.ToLower().IndexOf("две надписи к картинкам из \"онегина\", приложенным к \"невскому альманаху\"") != -1)
+                        || (titleString.ToLower().IndexOf("вот перешедши мост какушкин") != -1)
+                        || (titleString.ToLower().IndexOf("пупок чернеет сквозь рубашку") != -1)
+                        || (titleString.ToLower().IndexOf("в академии наук") != -1)
+                        || (titleString.ToLower().IndexOf("словесность русская больна") != -1)
+                        || (titleString.ToLower().IndexOf("\"сыны отечества\" и \"вестники европы\"") != -1)
+                        || (titleString.ToLower().IndexOf("агафье") != -1)
+                        || /*1 том*/ (titleString.ToLower() == "\"27 мая 1819\"")
+                        || (titleString.ToLower().IndexOf("а в ненастные дни") != -1)
+                        || (titleString.ToLower().IndexOf("а шутку не могу придумать я другую") != -1)
+                        || (titleString.ToLower().IndexOf("анне вульф") != -1)
+                        || (titleString.ToLower().IndexOf("брови царь нахмуря") != -1)
+                        || (titleString.ToLower().IndexOf("дельвигу (друг дельвиг, мой парнасский брат)") != -1)
+                        || (titleString.ToLower().IndexOf("к кастрату раз пришел скрыпач") != -1)
+                        || /*1 том*/ (titleString.ToLower() == "\"к портрету каверина\"")
+                        || (titleString.ToLower().IndexOf("как широко, как глубоко") != -1)
+                        || (titleString.ToLower().IndexOf("когда, стройна и светлоока") != -1)
+                        || (titleString.ToLower() == "\"куплеты\"")
+                        || /*1 том*/ (titleString.ToLower() == "\"couplets\"")
+                        || /*1 том*/ (titleString.ToLower() == "\"мансурову\"")
+                        || (titleString.ToLower().IndexOf("мой друг, уже три дня") != -1)
+                        || (titleString.ToLower().IndexOf("на давыдову") != -1)
+                        || (titleString.ToLower().IndexOf("на дондукова-корсакова") != -1)
+                        || (titleString.ToLower().IndexOf("накажи, святой угодник") != -1)
+                        || /*1 том*/ (titleString.ToLower() == "\"недавно тихим вечерком\"")
+                        || (titleString.ToLower().IndexOf("орлов с истоминой в постеле") != -1)
+                        || /*1 том*/ (titleString.ToLower() == "\"от всенощной вечор идя домой\"")
+                        || (titleString.ToLower().IndexOf("рефутация г-на беранжера") != -1)
+                        || (titleString.ToLower().IndexOf("сводня грустно за столом") != -1)
+                        || (titleString.ToLower().IndexOf("смеетесь вы, что девой бойкой") != -1)
+                        || (titleString.ToLower().IndexOf("телега жизни") != -1)
+                        || (titleString.ToLower().IndexOf("царь никита и сорок его дочерей") != -1)
+                        || (titleString.ToLower().IndexOf("эпиграмма на стурдзу") != -1)
+                        || (titleString.ToLower() == "\"эпитафия\""))
+                    {
+                        line.SetThemeType(99);
                     }
                 }
                 else line.SetThemeType(1);
