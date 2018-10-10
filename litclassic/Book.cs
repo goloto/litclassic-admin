@@ -974,6 +974,7 @@ namespace litclassic
                         || /*Пушкин, 2 т.*/ (titleString.ToLower() == "\"из письма к гнедичу\"")
                         || /*Пушкин, 2 т.*/ (titleString.ToLower() == "\"из письма\", \"к я. н. толстому\"")
                         || /*Пушкин, 2 т.*/ (titleString.ToLower() == "\"из письма к в. п. горчакову\"")
+                        || /*Пушкин, 2 т.*/ (titleString.ToLower() == "\"из письма к вульфу\"")
                         || /*Пушкин, 2 т.*/ (titleString.ToLower() == "\"из письма к плетневу\"")
                         || /*Пушкин, 2 т.*/ (titleString.ToLower() == "\"из письма к родзянке\"")
                         || /*Пушкин, 2 т.*/ (titleString.ToLower() == "\"из письма к великопольскому\"")
@@ -1217,21 +1218,6 @@ namespace litclassic
 
 
 
-                        
-                        // на давыдову
-                        || (titleString.ToLower().IndexOf("иной имел мою аглаю") != -1)
-
-                        // исключить?                       
-                        || (titleString.ToLower().IndexOf("анне вульф") != -1)                        
-                   
-                        // Вяземскому
-                        || (titleString.ToLower().IndexOf("а шутку не могу придумать я другую") != -1)  
-                        
-                        
-
-
-
-
                         || (titleString.ToLower().IndexOf("граф нулин") != -1)                                                                           
                         || (titleString.ToLower().IndexOf("рефутация г-на беранжера") != -1)
                         || (titleString.ToLower().IndexOf("к кастрату раз пришел скрыпач") != -1)
@@ -1244,13 +1230,13 @@ namespace litclassic
                         || (titleString.ToLower().IndexOf("\"сыны отечества\" и \"вестники европы\"") != -1)
                         || (titleString.ToLower().IndexOf("агафье") != -1)                       
                         || (titleString.ToLower().IndexOf("а в ненастные дни") != -1)     
-                        // Вульф, 2 т.
-                        || (titleString.ToLower().IndexOf("как широко, как глубоко") != -1)
+                        // в отрывках, 2 т.
+                        //|| (titleString.ToLower().IndexOf("как широко, как глубоко") != -1)
                         || (titleString.ToLower().IndexOf("когда, стройна и светлоока") != -1)                                                                         
                         || (titleString.ToLower().IndexOf("на дондукова-корсакова") != -1)                                      
                         || (titleString.ToLower().IndexOf("сводня грустно за столом") != -1)
                         // В отрывках, 2 т.
-                        || (titleString.ToLower().IndexOf("смеетесь вы, что девой бойкой") != -1)
+                        //|| (titleString.ToLower().IndexOf("смеетесь вы, что девой бойкой") != -1)
                         || (titleString.ToLower() == "\"эпитафия\""))
                         //|| (titleString.ToLower() == "\"позволь душе моей открыться пред тобою…\""))
                     {
@@ -1259,7 +1245,6 @@ namespace litclassic
                 }
                 else line.SetThemeType(1);
                 
-
                 line.AddNewPartOfTitleOld(titleString);
             }
 
