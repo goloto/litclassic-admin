@@ -208,7 +208,7 @@ namespace litclassic
 
                 for (int iListParticals = 0; iListParticals < partical.GetListParticals().Count(); iListParticals++)
                 {
-                    currentDBConnect.WriteNewPartical(bookID, descriptionID,
+                    currentDBConnect.WriteNewPartical(bookID,
                         partical.GetListParticalsTitles()[iListParticals],
                         partical.GetListParticals()[iListParticals],
                         partical.GetListIndexLastParticalLines()[iListParticals],
@@ -1257,7 +1257,7 @@ namespace litclassic
                         line.SetThemeType(99);
                     }
                 }
-                else line.SetThemeType(1);
+                else line.SetThemeType(0);
                 
                 line.AddNewPartOfTitleOld(titleString);
             }

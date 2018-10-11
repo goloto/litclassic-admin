@@ -19,6 +19,7 @@ namespace litclassic
         private int sumStrongConnections;
         private int linesEntryPercent = 0;
         private List<int> listSumStrongConnections = new List<int>();
+        private List<int> listThemeTypes = new List<int>();
 
 
         public void BuildParticals(List<Line> newListLines)
@@ -34,6 +35,7 @@ namespace litclassic
             }
 
             FillListIndexLastParticalLines();
+            CheckThemeTypesInListLines();
             FillListParticals();
             FillListParticalsTitles();
             CalculateLinesEntry();
@@ -595,6 +597,45 @@ namespace litclassic
 
             }
         }
+        private void CheckThemeTypesInListLines()
+        {
+            // длинна списка будущих "частиц"
+            int listFutureParticalsCount = listFutureParticals.Count();
+
+            for (int iListFutureParticals = 0; iListFutureParticals < listFutureParticalsCount; iListFutureParticals++) 
+            {
+                // изменился ли тип темы
+                bool themeChange = false;
+                // тип темы
+                int theme = listFutureParticals[iListFutureParticals][0][0].GetThemeType();
+
+                foreach (List<Line> listLines in listFutureParticals[iListFutureParticals])
+                {
+                    foreach (Line line in listLines)
+                    {
+                        // изменилась тема или её тип = "99"
+                        if ((line.GetThemeType() != theme) || (line.GetThemeType() == 99)) themeChange = true;
+                    }
+                }
+
+                // если изменилась
+                if (themeChange)
+                {
+                    // "частица" исключается из списка будущих "частиц"
+                    listFutureParticals.RemoveAt(listFutureParticals.IndexOf(listFutureParticals[iListFutureParticals]));
+
+                    // правятся индексы в списке
+                    iListFutureParticals--;
+                    listFutureParticalsCount--;
+                }
+                // если не изменялась
+                else
+                {
+                    // тип темы добавляется в список
+                    listThemeTypes.Add(theme);
+                }
+            }
+        }
         private void FillListParticals()
         {
             foreach (List<List<Line>> listListLines in listFutureParticals)
@@ -817,6 +858,10 @@ namespace litclassic
         public List<string> GetListParticalsTitles()
         {
             return listParticalsTitles;
+        }
+        public List<int> GetListThemeTypes()
+        {
+            return listThemeTypes;
         }
         public List<int> GetListIndexLastParticalLines()
         {
