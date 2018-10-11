@@ -978,7 +978,9 @@ namespace litclassic
                         || /*Пушкин, 2 т.*/ (titleString.ToLower() == "\"из письма к плетневу\"")
                         || /*Пушкин, 2 т.*/ (titleString.ToLower() == "\"из письма к родзянке\"")
                         || /*Пушкин, 2 т.*/ (titleString.ToLower() == "\"из письма к великопольскому\"")
-                        || /*Пушкин, 2 т.*/ (titleString.ToLower() == "\"из письма к соболевскому\""))
+                        || /*Пушкин, 2 т.*/ (titleString.ToLower() == "\"из письма к соболевскому\"")
+                        || /*Пушкин, 6 т.*/ (titleString.ToLower() == "\"роман в письмах\"")
+                        || /*Пушкин, 8 т.*/ (titleString.ToLower() == "\"история пугачева\""))
                     {
                         // сделано для того, чтобы отделить сами произведения с таким названием 
                         // от разделов в примечании с этим же названием
@@ -1066,7 +1068,9 @@ namespace litclassic
                         // историческое
                         || /*из Пушкина, 8 т.*/ (titleString.ToLower().IndexOf("историческая проза") != -1)
                         || /*из Пушкина, 8 т.*/ (titleString.ToLower().IndexOf("замечания о бунте") != -1)
-                        || /*из Пушкина, 9 т.*/ (titleString.ToLower().IndexOf("история петра") != -1))                                                
+                        || /*из Пушкина, 9 т.*/ (titleString.ToLower().IndexOf("история петра") != -1)
+
+                        || /*из Пушкина, 10 т.*/ (titleString.IndexOf(" П. А. ВЯЗЕМСКОМУ") != -1))                                                
                     {
                         // сделано для того, чтобы отделить материал с таким названием 
                         // от разделов в примечании с этим же названием
@@ -1157,10 +1161,8 @@ namespace litclassic
                     }
                     // Пушкинские исключения
                     else if
-                        ((titleString.ToLower().IndexOf("гавриилиада") != -1)
-
                         // в порядке встреч в тексте книги
-                        || /*1 том*/ (titleString.ToLower() == "\"монах\"")
+                           /*1 том*/ ((titleString.ToLower() == "\"монах\"")
                         || /*1 том*/ (titleString.ToLower() == "\"красавице, которая нюхала табак\"")
                         || /*1 том*/ (titleString.ToLower() == "\"эпиграмма \", \"(подражание французскому)\"")
                         || /*1 том*/ (titleString.ToLower() == "\"леда\", \"(кантата)\"")
@@ -1232,11 +1234,10 @@ namespace litclassic
                         || /*3 том*/ (titleString.ToLower().IndexOf("от меня вечор леила") != -1)
 
 
-                        //"Пора, пора! рога трубят"
-                        || (titleString.ToLower().IndexOf("граф нулин") != -1)                       
-                        //|| (titleString.ToLower().IndexOf("две надписи") != -1)
-                        //|| (titleString.ToLower().IndexOf("вот перешедши мост кокушкин") != -1)
-                        //|| (titleString.ToLower().IndexOf("пупок чернеет сквозь рубашку") != -1)                       
+                        || /*4 том*/ (titleString.ToLower().IndexOf("гавриилиада") != -1)
+                        || /*4 том*/ (titleString.ToLower().IndexOf("граф нулин") != -1)
+                        
+                     
                         //"Ты просишь написать надгробную Агафья?"
                         || (titleString.ToLower().IndexOf("агафье") != -1)
                         || (titleString.ToLower().IndexOf("а в ненастные дни") != -1)                        
@@ -1248,7 +1249,6 @@ namespace litclassic
 
 
                         //"всё изменилося под нашим зодиаком"
-                        //"сыны отечества и вестники европы"
                     {
                         line.SetThemeType(99);
                     }
