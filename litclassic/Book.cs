@@ -1223,33 +1223,31 @@ namespace litclassic
                         || /*2 том*/ (titleString.ToLower().IndexOf("на фотия") != -1)
 
 
+                        || /*3 том*/ (titleString.ToLower().IndexOf("сводня грустно за столом") != -1)
+                        || /*3 том*/ (titleString.ToLower() == "\"рефутация г-на беранжера\"")
+                        || /*3 том*/ (titleString.ToLower() == "\"из альбома а. п. керн\"")
+                        || /*3 том*/ (titleString.ToLower().IndexOf("на картинки к «евгению онегину» ") != -1)
+                        || /*3 том*/ (titleString.ToLower() == "\"на дондукова-корсакова\"")
+                        || /*3 том*/ (titleString.ToLower().IndexOf("к кастрату раз пришел скрыпач") != -1)
+                        || /*3 том*/ (titleString.ToLower().IndexOf("от меня вечор леила") != -1)
+
+
                         //"Пора, пора! рога трубят"
-                        || (titleString.ToLower().IndexOf("граф нулин") != -1)
-                        //"К кастрату раз пришел скрипач"
-                        || (titleString.ToLower().IndexOf("к кастрату раз пришел скрыпач") != -1)
-                        || (titleString.ToLower().IndexOf("две надписи") != -1)
-                        || (titleString.ToLower().IndexOf("вот перешедши мост какушкин") != -1)
-                        || (titleString.ToLower().IndexOf("пупок чернеет сквозь рубашку") != -1)
-                        //"В Академии наук"
-                        || (titleString.ToLower().IndexOf("на дондукова-корсакова") != -1)
-                        || (titleString.ToLower().IndexOf("в академии наук") != -1)
+                        || (titleString.ToLower().IndexOf("граф нулин") != -1)                       
+                        //|| (titleString.ToLower().IndexOf("две надписи") != -1)
+                        //|| (titleString.ToLower().IndexOf("вот перешедши мост кокушкин") != -1)
+                        //|| (titleString.ToLower().IndexOf("пупок чернеет сквозь рубашку") != -1)                       
                         //"Ты просишь написать надгробную Агафья?"
                         || (titleString.ToLower().IndexOf("агафье") != -1)
-                        || (titleString.ToLower().IndexOf("а в ненастные дни") != -1)
-                        || (titleString.ToLower().IndexOf("когда, стройна и светлоока") != -1)
-                        //"Сводня грустно за столом"
-                        || (titleString.ToLower().IndexOf("сводня грустно за столом") != -1)
+                        || (titleString.ToLower().IndexOf("а в ненастные дни") != -1)                        
+                        || (titleString.ToLower().IndexOf("когда, стройна и светлоока") != -1)                       
                         //"мне жаль великия жены" (???)
                         || (titleString.ToLower() == "\"эпитафия\"")
-                        //"Ты помнишь ли, как были мы в Париже"
-                        || (titleString.ToLower().IndexOf("беранжера") != -1)
                         //"однажды зимним вечерком"
                         || (titleString.ToLower().IndexOf("тень баркова") != -1))
 
 
-                        //"сводня грустно за столом"
                         //"всё изменилося под нашим зодиаком"
-                        //"от меня вечор лейла"
                         //"сыны отечества и вестники европы"
                     {
                         line.SetThemeType(99);
