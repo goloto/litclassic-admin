@@ -1235,20 +1235,7 @@ namespace litclassic
 
 
                         || /*4 том*/ (titleString.ToLower().IndexOf("гавриилиада") != -1)
-                        || /*4 том*/ (titleString.ToLower().IndexOf("граф нулин") != -1)
-                        
-                     
-                        //"Ты просишь написать надгробную Агафья?"
-                        || (titleString.ToLower().IndexOf("агафье") != -1)
-                        || (titleString.ToLower().IndexOf("а в ненастные дни") != -1)                        
-                        || (titleString.ToLower().IndexOf("когда, стройна и светлоока") != -1)                       
-                        //"мне жаль великия жены" (???)
-                        || (titleString.ToLower() == "\"эпитафия\"")
-                        //"однажды зимним вечерком"
-                        || (titleString.ToLower().IndexOf("тень баркова") != -1))
-
-
-                        //"всё изменилося под нашим зодиаком"
+                        || /*4 том*/ (titleString.ToLower().IndexOf("граф нулин") != -1))                                           
                     {
                         line.SetThemeType(99);
                     }
