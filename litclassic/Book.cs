@@ -28,7 +28,7 @@ namespace litclassic
         private Comprehension comprehension = new Comprehension();
         private List<int> listExplanationStrongConnections = new List<int>();
         private List<int> listExplanationRecommendConnections = new List<int>();
-        private Partical partical = new Partical();
+        private Particle particle = new Particle();
         private List<Title> listTitles = new List<Title>();
         private List<string> listNewLiterals = new List<string>();
         private int lineIndex = 0;
@@ -124,7 +124,7 @@ namespace litclassic
 
             ClearLines();
 
-            partical.BuildParticals(listLines);
+            particle.BuildParticles(listLines);
             currentProgressValue++;
             //ChangeProgress(14, 14);
             ChangeProgressName("Создание частиц");
@@ -181,31 +181,31 @@ namespace litclassic
 
                 ChangeProgressName("Запись частиц в базу");
                 // установка максимального значения прогресс бара
-                ChangeProgressMaximumValue(partical.GetListParticals().Count());
+                ChangeProgressMaximumValue(particle.GetListParticles().Count());
 
-                for (int iListParticals = 0; iListParticals < partical.GetListParticals().Count(); iListParticals++)
+                for (int iListParticles = 0; iListParticles < particle.GetListParticles().Count(); iListParticles++)
                 {
-                    currentDBConnect.WriteNewPartical(bookID,
+                    currentDBConnect.WriteNewParticle(bookID,
                         // описание "частицы"
-                        partical.GetListParticalsTitles()[iListParticals],
+                        particle.GetListParticlesTitles()[iListParticles],
                         // текст "частицы"
-                        partical.GetListParticals()[iListParticals],
+                        particle.GetListParticles()[iListParticles],
                         // индекс последней строки "частицы"
-                        partical.GetListIndexLastParticalLines()[iListParticals],
+                        particle.GetListIndexLastParticlesLines()[iListParticles],
                         // сумма связей "частицы"
-                        partical.GetListSumStrongConnections()[iListParticals],
+                        particle.GetListSumStrongConnections()[iListParticles],
                         // автор и тип темы "частицы
-                        authorNum, partical.GetListThemeTypes()[iListParticals]);
+                        authorNum, particle.GetListThemeTypes()[iListParticles]);
                     currentProgressValue++;
                 }
 
-                currentDBConnect.WriteNewStatistic(bookID, partical.GetLinesEntryPercent());
+                currentDBConnect.WriteNewStatistic(bookID, particle.GetLinesEntryPercent());
             }
             // запись только "частиц"
-            else if (typeWrite == "only particals")
+            else if (typeWrite == "only particles")
             {
                 // установка максимального значения прогресс бара
-                ChangeProgressMaximumValue(partical.GetListParticals().Count());
+                ChangeProgressMaximumValue(particle.GetListParticles().Count());
 
                 currentProgressValue = 0;
                 int[] bookIDDescriptionID = new int[2];
@@ -216,23 +216,23 @@ namespace litclassic
 
                 ChangeProgressName("Запись частиц в базу");
 
-                for (int iListParticals = 0; iListParticals < partical.GetListParticals().Count(); iListParticals++)
+                for (int iListParticles = 0; iListParticles < particle.GetListParticles().Count(); iListParticles++)
                 {
-                    currentDBConnect.WriteNewPartical(bookID,
+                    currentDBConnect.WriteNewParticle(bookID,
                         // описание "частицы"
-                        partical.GetListParticalsTitles()[iListParticals],
+                        particle.GetListParticlesTitles()[iListParticles],
                         // текст "частицы"
-                        partical.GetListParticals()[iListParticals],
+                        particle.GetListParticles()[iListParticles],
                         // индекс последней строки "частицы"
-                        partical.GetListIndexLastParticalLines()[iListParticals],
+                        particle.GetListIndexLastParticlesLines()[iListParticles],
                         // сумма связей "частицы"
-                        partical.GetListSumStrongConnections()[iListParticals],
+                        particle.GetListSumStrongConnections()[iListParticles],
                         // автор и тип темы "частицы
-                        authorNum, partical.GetListThemeTypes()[iListParticals]);
+                        authorNum, particle.GetListThemeTypes()[iListParticles]);
                     currentProgressValue++;
                 }
 
-                currentDBConnect.WriteNewStatistic(bookID, partical.GetLinesEntryPercent());
+                currentDBConnect.WriteNewStatistic(bookID, particle.GetLinesEntryPercent());
             }
             // запись только строк книги
             else if (typeWrite == "only lines")
@@ -252,7 +252,7 @@ namespace litclassic
                     currentProgressValue++;
                 }
 
-                currentDBConnect.WriteNewStatistic(bookID, partical.GetLinesEntryPercent());
+                currentDBConnect.WriteNewStatistic(bookID, particle.GetLinesEntryPercent());
             }
 
             currentTimer.Stop();
@@ -1708,7 +1708,7 @@ namespace litclassic
             else if (description.GetLastName().ToLower() == "пушкин") authorNum = 1;
             else if (description.GetLastName().ToLower() == "гоголь") authorNum = 2;
             else if (description.GetLastName().ToLower() == "жуковский") authorNum = 3;
-            else if (description.GetLastName().ToLower() == "державин") authorNum = 4;
+            else if (description.GetLastName().ToLower() == "крылов") authorNum = 4;
             else if (description.GetLastName().ToLower() == "лермонтов") authorNum = 5;
             else if (description.GetLastName().ToLower() == "тютчев") authorNum = 6;
             else if (description.GetLastName().ToLower() == "толстой") authorNum = 7;

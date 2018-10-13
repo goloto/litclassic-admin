@@ -4,66 +4,66 @@ using System.Linq;
 
 namespace litclassic
 {
-    class Partical
+    class Particle
     {
         private List<Line> listLines = new List<Line>(); // полученный из-вне список всех строк
         private List<Line> lines; // список строк формируемых частиц
         private List<List<Line>> listLinesInRecommendConnection; // список списка строк формируемых частиц, собранных с учетом рекомендуемой связи
-        private List<List<List<Line>>> listFutureParticals; // список списка списков, по которому затем сформируется итоговый список готовых частиц
+        private List<List<List<Line>>> listFutureParticles; // список списка списков, по которому затем сформируется итоговый список готовых частиц
         private int globalIndex; // индекс, используемый при формировании частиц
         private int indexOfLastLineWithTwoStrongConnection = 0;
-        private List<string> listParticals = new List<string>();
-        private List<string> listParticalsTitles = new List<string>();
+        private List<string> listParticles = new List<string>();
+        private List<string> listParticlesTitles = new List<string>();
         private List<Title> listTitles = new List<Title>();
-        private List<int> listIndexLastParticalLines = new List<int>();
+        private List<int> listIndexLastParticleLines = new List<int>();
         private int sumStrongConnections;
         private int linesEntryPercent = 0;
         private List<int> listSumStrongConnections = new List<int>();
         private List<int> listThemeTypes = new List<int>();
 
 
-        public void BuildParticals(List<Line> newListLines)
+        public void BuildParticles(List<Line> newListLines)
         {
             listLines = newListLines;
-            listFutureParticals = new List<List<List<Line>>>();
+            listFutureParticles = new List<List<List<Line>>>();
             globalIndex = 0;
 
             for (; globalIndex < listLines.Count(); globalIndex++)
             {
-                BuildListParticals();
-                CheckParticals(listLinesInRecommendConnection/*, globalIndex*/);
+                BuildListParticles();
+                CheckParticles(listLinesInRecommendConnection/*, globalIndex*/);
             }
 
-            FillListIndexLastParticalLines();
+            FillListIndexLastParticleLines();
             CheckThemeTypesInListLines();
-            FillListParticals();
-            FillListParticalsTitles();
+            FillListParticles();
+            FillListParticlesTitles();
             CalculateLinesEntry();
             FillListSumStrongConnections();
         }
 
 
-        private void BuildListParticals()
+        private void BuildListParticles()
         {
             // условие для связи, длина фрагмента которой позволят его соединять с другими
             if (listLines[globalIndex].GetExplanationStrongConnection() == 0)
             {
-                BuildZeroStrongConnectionPartical();
+                BuildZeroStrongConnectionParticle();
             }
             // условие для связи, длина фрагмента которой позволят его брать только одного и целиком
             else if (listLines[globalIndex].GetExplanationStrongConnection() == 1)
             {
-                BuildOneStrongConnectionPartical();
+                BuildOneStrongConnectionParticle();
             }
             // условие для связи, длина фрагмента которой позволят создавать частицы лишь внутри него
             else if (listLines[globalIndex].GetExplanationStrongConnection() == 2)
             {
-                if (globalIndex != 0) BuildTwoStrongConnectionPartical(globalIndex - 1);
-                else BuildTwoStrongConnectionPartical(globalIndex);
+                if (globalIndex != 0) BuildTwoStrongConnectionParticle(globalIndex - 1);
+                else BuildTwoStrongConnectionParticle(globalIndex);
                 //BuildTwoStrongConnectionPartical(globalIndex);
             }
         }
-        private void BuildZeroStrongConnectionPartical(/*int index*/)
+        private void BuildZeroStrongConnectionParticle(/*int index*/)
         {
             //int currentLength = 0;
             lines = new List<Line>();
@@ -96,7 +96,7 @@ namespace litclassic
 
             listLinesInRecommendConnection.Add(lines);
         }
-        private void BuildOneStrongConnectionPartical()
+        private void BuildOneStrongConnectionParticle()
         {
             lines = new List<Line>();
             listLinesInRecommendConnection = new List<List<Line>>();
@@ -129,7 +129,7 @@ namespace litclassic
 
             listLinesInRecommendConnection.Add(lines);
         }
-        private void BuildTwoStrongConnectionPartical(int index)
+        private void BuildTwoStrongConnectionParticle(int index)
         {
             //int currentLength = 0;
             lines = new List<Line>();
@@ -176,26 +176,26 @@ namespace litclassic
 
             listLinesInRecommendConnection.Add(lines);
         }
-        private void CheckParticals(List<List<Line>> inputListLists/*, int index*/)
+        private void CheckParticles(List<List<Line>> inputListLists/*, int index*/)
         {
             if (inputListLists.Last().Count() != 0)
             {
                 if (inputListLists.Last().Last().GetExplanationStrongConnection() == 0)
                 {
-                    CheckZeroStrongConnectionPartical(inputListLists);
+                    CheckZeroStrongConnectionParticle(inputListLists);
                 }
                 else if (inputListLists.Last().Last().GetExplanationStrongConnection() == 1)
                 {
-                    CheckOneStrongConnectionPartical(inputListLists);
+                    CheckOneStrongConnectionParticle(inputListLists);
                 }
                 else if (inputListLists.Last().Last().GetExplanationStrongConnection() == 2)
                 {
-                    CheckTwoStrongConnectionPartical(inputListLists/*, index*/);
+                    CheckTwoStrongConnectionParticle(inputListLists/*, index*/);
                 }
             }
         }
         // в каждой проверке хранится своя копия
-        private void CheckZeroStrongConnectionPartical(List<List<Line>> inputListLists)
+        private void CheckZeroStrongConnectionParticle(List<List<Line>> inputListLists)
         {
             // только 0 строгие связи
             // стихи добавлять, если с ними нет связи
@@ -206,7 +206,7 @@ namespace litclassic
             // индекс последнего элемента
             int currentIndex = inputListLists.Last().Last().GetIndex();
 
-            if ((CountParticalLength(inputListLists) > 1900) & (CountParticalLength(inputListLists) < 3900)) 
+            if ((CountParticleLength(inputListLists) > 1900) & (CountParticleLength(inputListLists) < 3900)) 
             {
                 if (inputListLists.Last().Last().GetExplanationRecommendConnection() != 1)
                 {
@@ -215,10 +215,10 @@ namespace litclassic
                     {
                         // если строка не последняя в книге, то следует проверить, является ли следующая связанной с ней
                         if (listLines[currentIndex + 1].GetExplanationRecommendConnection() != 2)
-                            listFutureParticals.Add(inputListLists);
+                            listFutureParticles.Add(inputListLists);
                     }
                     // текущая строка последняя в книге, поэтому текущий список становится частицей без каких-либо условий
-                    else listFutureParticals.Add(inputListLists);
+                    else listFutureParticles.Add(inputListLists);
                 }
                 //if ((globalIndex + 1 < listLines.Count())
                 //    && (inputListLists.Last().Last().GetExplanationRecommendConnection() != 1)
@@ -231,17 +231,17 @@ namespace litclassic
                 {
                     globalIndex = currentIndex + 1;
 
-                    BuildZeroStrongConnectionPartical();
+                    BuildZeroStrongConnectionParticle();
 
                     foreach (List<Line> listLines in listLinesInRecommendConnection)
                     {
                         inputListLists.Add(listLines);
                     }
 
-                    CheckParticals(inputListLists);
+                    CheckParticles(inputListLists);
                 }
             }
-            else if (CountParticalLength(inputListLists) < 1900)
+            else if (CountParticleLength(inputListLists) < 1900)
             {
                 // если верно, значит это стих
                 if (sumStrongConnections < -10)
@@ -257,7 +257,7 @@ namespace litclassic
                         {
                             globalIndex = currentIndex + 1;
 
-                            BuildZeroStrongConnectionPartical();
+                            BuildZeroStrongConnectionParticle();
 
                             foreach (List<Line> listLine in listLinesInRecommendConnection)
                             {
@@ -265,23 +265,23 @@ namespace litclassic
                             }
 
                             // есть ли разница, какой индекс ставить?
-                            CheckParticals(inputListLists);
+                            CheckParticles(inputListLists);
                         }
                         else if ((currentIndex + 1 < listLines.Count())
                             && (listLines[currentIndex + 1].GetExplanationStrongConnection() == 0))
                         {
                             globalIndex = currentIndex + 1;
 
-                            BuildZeroStrongConnectionPartical();
+                            BuildZeroStrongConnectionParticle();
 
                             foreach (List<Line> listLine in listLinesInRecommendConnection)
                             {
                                 inputListLists.Add(listLine);
                             }
 
-                            CheckParticals(inputListLists);
+                            CheckParticles(inputListLists);
                         }
-                        else listFutureParticals.Add(inputListLists);
+                        else listFutureParticles.Add(inputListLists);
                     }
                     // не знаю, как будет с этим условием
                     else if ((currentIndex + 1 < listLines.Count())
@@ -289,7 +289,7 @@ namespace litclassic
                     {
                         globalIndex = currentIndex + 1;
 
-                        BuildZeroStrongConnectionPartical();
+                        BuildZeroStrongConnectionParticle();
 
                         foreach (List<Line> listLine in listLinesInRecommendConnection)
                         {
@@ -297,7 +297,7 @@ namespace litclassic
                         }
 
                         // есть ли разница, какой индекс ставить?
-                        CheckParticals(inputListLists);
+                        CheckParticles(inputListLists);
                     }
                 }
                 // не стих
@@ -309,19 +309,19 @@ namespace litclassic
                     {
                         globalIndex = currentIndex + 1;
 
-                        BuildZeroStrongConnectionPartical();
+                        BuildZeroStrongConnectionParticle();
 
                         foreach (List<Line> listLine in listLinesInRecommendConnection)
                         {
                             inputListLists.Add(listLine);
                         }
 
-                        CheckParticals(inputListLists);
+                        CheckParticles(inputListLists);
                     }
                 }
             }
         }
-        private void CheckOneStrongConnectionPartical(List<List<Line>> inputListLists)
+        private void CheckOneStrongConnectionParticle(List<List<Line>> inputListLists)
         {
             int currentIndex = inputListLists.Last().Last().GetIndex();
 
@@ -332,10 +332,10 @@ namespace litclassic
                 {
                     // если строка не последняя в книге, то следует проверить, является ли следующая связанной с ней
                     if (listLines[currentIndex + 1].GetExplanationRecommendConnection() != 2)
-                        listFutureParticals.Add(inputListLists);
+                        listFutureParticles.Add(inputListLists);
                 }
                 // текущая строка последняя в книге, поэтому текущий список становится частицей без каких-либо условий
-                else listFutureParticals.Add(inputListLists);
+                else listFutureParticles.Add(inputListLists);
             }
             //if ((globalIndex + 1 < listLines.Count())
             //    && (inputListLists.Last().Last().GetExplanationRecommendConnection() != 1)
@@ -346,17 +346,17 @@ namespace litclassic
             //}
             else if ((currentIndex + 1 < listLines.Count()) && (listLines[currentIndex + 1].GetExplanationStrongConnection() == 0)) 
             {
-                BuildZeroStrongConnectionPartical(/*index + 1*/);
+                BuildZeroStrongConnectionParticle(/*index + 1*/);
 
                 foreach (List<Line> listLines in listLinesInRecommendConnection)
                 {
                     inputListLists.Add(listLines);
                 }
 
-                CheckParticals(inputListLists);
+                CheckParticles(inputListLists);
             }
         }
-        private void CheckTwoStrongConnectionPartical(List<List<Line>> inputListLists/*, int index*/)
+        private void CheckTwoStrongConnectionParticle(List<List<Line>> inputListLists/*, int index*/)
         {
             // только в рамках текущей строгой связи
             // все рекомендуемые, пока длина не будет выше 1900 и ниже 3900
@@ -365,8 +365,8 @@ namespace litclassic
 
             int currentIndex = inputListLists.Last().Last().GetIndex();
 
-            if ((CountParticalLength(inputListLists) > 1900) 
-                & (CountParticalLength(inputListLists) < 3900))
+            if ((CountParticleLength(inputListLists) > 1900) 
+                & (CountParticleLength(inputListLists) < 3900))
             {
                 if (inputListLists.Last().Last().GetExplanationRecommendConnection() != 1)
                 {
@@ -375,10 +375,10 @@ namespace litclassic
                     {
                         // если строка не последняя в книге, то следует проверить, является ли следующая связанной с ней
                         if (listLines[currentIndex + 1].GetExplanationRecommendConnection() != 2)
-                            listFutureParticals.Add(inputListLists);
+                            listFutureParticles.Add(inputListLists);
                     }
                     // текущая строка последняя в книге, поэтому текущий список становится частицей без каких-либо условий
-                    else listFutureParticals.Add(inputListLists);
+                    else listFutureParticles.Add(inputListLists);
                 }
                 //if ((indexOfLastLineWithTwoStrongConnection + 1 < listLines.Count())
                 //    && (inputListLists.Last().Last().GetExplanationRecommendConnection() != 1)
@@ -390,18 +390,18 @@ namespace litclassic
                 else if ((listLines[currentIndex + 1].GetExplanationStrongConnection() == 2) 
                     & (listLines[currentIndex + 1].GetStrongConnection() == listLines[currentIndex].GetStrongConnection()))
                 {
-                    BuildTwoStrongConnectionPartical(currentIndex + 1);
+                    BuildTwoStrongConnectionParticle(currentIndex + 1);
 
                     foreach (List<Line> listLines in listLinesInRecommendConnection)
                     {
                         inputListLists.Add(listLines);
                     }
 
-                    CheckParticals(inputListLists);
+                    CheckParticles(inputListLists);
                 }
 
             }
-            else if (CountParticalLength(inputListLists) < 1900)
+            else if (CountParticleLength(inputListLists) < 1900)
             {
                 // необходимое для успешной компиляции условие
                 if (currentIndex + 1 < listLines.Count())
@@ -417,7 +417,7 @@ namespace litclassic
                                 & (listLines[currentIndex + 1].GetExplanationStrongConnection() == 2)
                                 & (listLines[currentIndex + 1].GetStrongConnection() == listLines[currentIndex].GetStrongConnection()))
                             {
-                                BuildTwoStrongConnectionPartical(currentIndex + 1);
+                                BuildTwoStrongConnectionParticle(currentIndex + 1);
 
                                 foreach (List<Line> listLine in listLinesInRecommendConnection)
                                 {
@@ -425,22 +425,22 @@ namespace litclassic
                                 }
 
                                 // есть ли разница, какой индекс ставить?
-                                CheckParticals(inputListLists);
+                                CheckParticles(inputListLists);
                             }
-                            else listFutureParticals.Add(inputListLists);
+                            else listFutureParticles.Add(inputListLists);
                         }
                         // не знаю, как будет с этим условием 
                         else if ((listLines[currentIndex + 1].GetExplanationStrongConnection() == 2)
                             & (listLines[currentIndex + 1].GetStrongConnection() == listLines[currentIndex].GetStrongConnection()))
                         {
-                            BuildTwoStrongConnectionPartical(currentIndex + 1);
+                            BuildTwoStrongConnectionParticle(currentIndex + 1);
 
                             foreach (List<Line> listLines in listLinesInRecommendConnection)
                             {
                                 inputListLists.Add(listLines);
                             }
 
-                            CheckParticals(inputListLists);
+                            CheckParticles(inputListLists);
                         }
 
                     }
@@ -451,20 +451,20 @@ namespace litclassic
                         if ((listLines[currentIndex + 1].GetExplanationStrongConnection() == 2) 
                             & (listLines[currentIndex + 1].GetStrongConnection() == listLines[currentIndex].GetStrongConnection()))
                         {
-                            BuildTwoStrongConnectionPartical(currentIndex + 1);
+                            BuildTwoStrongConnectionParticle(currentIndex + 1);
 
                             foreach (List<Line> listLines in listLinesInRecommendConnection)
                             {
                                 inputListLists.Add(listLines);
                             }
 
-                            CheckParticals(inputListLists);
+                            CheckParticles(inputListLists);
                         }
                     }
                 }
             }
         }
-        private void CheckParticalsOld(List<List<Line>> inputListLists)
+        private void CheckParticlesOld(List<List<Line>> inputListLists)
         {
             List<List<Line>> tempListListsLines = new List<List<Line>>();
 
@@ -485,7 +485,7 @@ namespace litclassic
             if ((tempListListsLines.Last().Count() != 0) && (tempListListsLines.Last().Last().GetExplanationStrongConnection() != 1))
             {
                 // если длина меньше 1200
-                if (CountParticalLength(tempListListsLines) < 1200)
+                if (CountParticleLength(tempListListsLines) < 1200)
                 {
                     // если верно, значит это стих
                     if (sumStrongConnections < -10)
@@ -499,7 +499,7 @@ namespace litclassic
                                 if (listLines[globalIndex + 1].GetExplanationStrongConnection() == 0)
                                 {
                                     globalIndex++;
-                                    BuildZeroStrongConnectionPartical();
+                                    BuildZeroStrongConnectionParticle();
 
                                     foreach (List<Line> newList in listLinesInRecommendConnection)
                                     {
@@ -513,11 +513,11 @@ namespace litclassic
                                         tempListListsLines.Add(tempListLines);
                                     }
 
-                                    CheckParticals(tempListListsLines/*, globalIndex*/);
+                                    CheckParticles(tempListListsLines/*, globalIndex*/);
                                 }
                             }
                         }
-                        else listFutureParticals.Add(tempListListsLines);
+                        else listFutureParticles.Add(tempListListsLines);
                     }
                     // это не стих
                     else
@@ -532,7 +532,7 @@ namespace litclassic
                                 if (listLines[globalIndex + 1].GetExplanationStrongConnection() == 0)
                                 {
                                     globalIndex++;
-                                    BuildZeroStrongConnectionPartical();
+                                    BuildZeroStrongConnectionParticle();
 
                                     foreach (List<Line> newList in listLinesInRecommendConnection)
                                     {
@@ -546,29 +546,29 @@ namespace litclassic
                                         tempListListsLines.Add(tempListLines);
                                     }
 
-                                    CheckParticals(tempListListsLines/*, globalIndex*/);
+                                    CheckParticles(tempListListsLines/*, globalIndex*/);
                                 }
                             }
                         }
                     }
                 }
                 // если длина меньше 3600
-                else if (CountParticalLength(tempListListsLines) < 3600)
+                else if (CountParticleLength(tempListListsLines) < 3600)
                 {
                     if ((tempListListsLines.Last().Count() != 0) &&
                         (tempListListsLines.Last().Last().GetExplanationRecommendConnection() != 1))
-                        listFutureParticals.Add(tempListListsLines);
+                        listFutureParticles.Add(tempListListsLines);
                 }
             }
             // если фрагмент был с объяснением строгой связи, равным "1"
             else if ((tempListListsLines.Last().Count() != 0) && (tempListListsLines.Last().Last().GetExplanationStrongConnection() == 1))
             {
-                listFutureParticals.Add(tempListListsLines);
+                listFutureParticles.Add(tempListListsLines);
             }
         }
 
 
-        private int CountParticalLength(List<List<Line>> listLines)
+        private int CountParticleLength(List<List<Line>> listLines)
         {
             int length = 0;
 
@@ -582,17 +582,17 @@ namespace litclassic
 
             return length;
         }
-        private void FillListIndexLastParticalLines()
+        private void FillListIndexLastParticleLines()
         {
-            for (int i = 0; i < listFutureParticals.Count(); i++) 
+            for (int i = 0; i < listFutureParticles.Count(); i++) 
             {
-                if (listFutureParticals[i].Last().Count() == 0)
+                if (listFutureParticles[i].Last().Count() == 0)
                 {
-                    listIndexLastParticalLines.Add(listFutureParticals[i][listFutureParticals[i].Count() - 2].Last().GetIndex());
+                    listIndexLastParticleLines.Add(listFutureParticles[i][listFutureParticles[i].Count() - 2].Last().GetIndex());
                 }
                 else
                 {
-                    listIndexLastParticalLines.Add(listFutureParticals[i].Last().Last().GetIndex());
+                    listIndexLastParticleLines.Add(listFutureParticles[i].Last().Last().GetIndex());
                 }
 
             }
@@ -600,16 +600,16 @@ namespace litclassic
         private void CheckThemeTypesInListLines()
         {
             // длинна списка будущих "частиц"
-            int listFutureParticalsCount = listFutureParticals.Count();
+            int listFutureParticlesCount = listFutureParticles.Count();
 
-            for (int iListFutureParticals = 0; iListFutureParticals < listFutureParticalsCount; iListFutureParticals++) 
+            for (int iListFutureParticles = 0; iListFutureParticles < listFutureParticlesCount; iListFutureParticles++) 
             {
                 // изменился ли тип темы
                 bool themeChange = false;
                 // тип темы
-                int theme = listFutureParticals[iListFutureParticals][0][0].GetThemeType();
+                int theme = listFutureParticles[iListFutureParticles][0][0].GetThemeType();
 
-                foreach (List<Line> listLines in listFutureParticals[iListFutureParticals])
+                foreach (List<Line> listLines in listFutureParticles[iListFutureParticles])
                 {
                     foreach (Line line in listLines)
                     {
@@ -622,11 +622,11 @@ namespace litclassic
                 if (themeChange)
                 {
                     // "частица" исключается из списка будущих "частиц"
-                    listFutureParticals.RemoveAt(listFutureParticals.IndexOf(listFutureParticals[iListFutureParticals]));
+                    listFutureParticles.RemoveAt(listFutureParticles.IndexOf(listFutureParticles[iListFutureParticles]));
 
                     // правятся индексы в списке
-                    iListFutureParticals--;
-                    listFutureParticalsCount--;
+                    iListFutureParticles--;
+                    listFutureParticlesCount--;
                 }
                 // если не изменялась
                 else
@@ -636,34 +636,34 @@ namespace litclassic
                 }
             }
         }
-        private void FillListParticals()
+        private void FillListParticles()
         {
-            foreach (List<List<Line>> listListLines in listFutureParticals)
+            foreach (List<List<Line>> listListLines in listFutureParticles)
             {
-                string particalLine = "";
+                string particleLine = "";
                 int strongConnectionPreviousLine = 0;
 
                 foreach (List<Line> listLines in listListLines)
                 {
                     if (((listLines[0].GetStrongConnection() < 0) & (strongConnectionPreviousLine < 0)) 
-                        & (listLines[0].GetStrongConnection() != strongConnectionPreviousLine)) particalLine += "...\n\r";
+                        & (listLines[0].GetStrongConnection() != strongConnectionPreviousLine)) particleLine += "...\n\r";
 
                     foreach (Line line in listLines)
                     {
-                        particalLine += line.GetLine();
+                        particleLine += line.GetLine();
                         strongConnectionPreviousLine = line.GetStrongConnection();
                     }                  
                 }
 
-                listParticals.Add(particalLine);
+                listParticles.Add(particleLine);
             }
         }
-        private void FillListParticalsTitles()
+        private void FillListParticlesTitles()
         {
-            foreach (List<List<Line>> listListsLines in listFutureParticals)
+            foreach (List<List<Line>> listListsLines in listFutureParticles)
             {
                 // -- формирование списков частей заголовка строк --
-                string particalTitle = "";
+                string particleTitle = "";
                 List<string> listFinalTitles = new List<string>();
                 // список списка отдельных частей заголовков
                 List<List<string>> listPartsOfTitles = new List<List<string>>();
@@ -714,14 +714,14 @@ namespace litclassic
                 firstTitle.CreateTitle();
 
                 // создание строки заголовка
-                particalTitle = BuildParticalsTitle(firstTitle);
+                particleTitle = BuildParticlesTitle(firstTitle);
                 // -- формирование первой версии заголовка --
 
 
 
                 // -- формирование окончательной версии заголовка --
                 string[] largePartsOfTitle;
-                largePartsOfTitle = particalTitle.Split(';');
+                largePartsOfTitle = particleTitle.Split(';');
 
                 // убирает лишний последний элемент массива, который неминуемо возникает пустым, т.к. заголовок оканчивается на ";"
                 Array.Resize(ref largePartsOfTitle, largePartsOfTitle.Length - 1);
@@ -760,7 +760,7 @@ namespace litclassic
                             // если однотипная часть заголовка лишь одна, т.е. объединять нечего
                             if (firstIndexComponent != lastIndexComponent)
                             {
-                                particalTitle = ReplaceFirst(particalTitle, partForReplace, firstIndexComponent + '-' + lastIndexComponent + ' ' + component + "; ");
+                                particleTitle = ReplaceFirst(particleTitle, partForReplace, firstIndexComponent + '-' + lastIndexComponent + ' ' + component + "; ");
                             }
 
                             iLargePartsOfTitle--;
@@ -774,7 +774,7 @@ namespace litclassic
 
 
                 // добавление строки заголовка в общий список заголовков
-                listParticalsTitles.Add(particalTitle);
+                listParticlesTitles.Add(particleTitle);
             }
         }
         private void CalculateLinesEntry()
@@ -786,7 +786,7 @@ namespace litclassic
                 listLinesEntry.Add(false);
             }
 
-            foreach (List<List<Line>> listListLine in listFutureParticals)
+            foreach (List<List<Line>> listListLine in listFutureParticles)
             {
                 foreach (List<Line> listLine in listListLine)
                 {
@@ -805,7 +805,7 @@ namespace litclassic
             double doubleLinesEntryPercent = Convert.ToDouble(linesEntryPercent) / Convert.ToDouble(listLines.Count()) * 100;
             linesEntryPercent = Convert.ToInt32(doubleLinesEntryPercent);
         }
-        private string BuildParticalsTitle(Title title)
+        private string BuildParticlesTitle(Title title)
         {
             string titleString = "";
             titleString += title.GetTitleString();
@@ -814,7 +814,7 @@ namespace litclassic
             //{
                 foreach (Title elementTitle in title.GetListTitles())
                 {
-                    titleString += BuildParticalsTitle(elementTitle);
+                    titleString += BuildParticlesTitle(elementTitle);
                 }
             //}
 
@@ -834,7 +834,7 @@ namespace litclassic
         }
         private void FillListSumStrongConnections()
         {
-            foreach (List<List<Line>> listListLines in listFutureParticals)
+            foreach (List<List<Line>> listListLines in listFutureParticles)
             {
                 int currentSum = 0;
 
@@ -851,21 +851,21 @@ namespace litclassic
         }
 
 
-        public List<string> GetListParticals()
+        public List<string> GetListParticles()
         {
-            return listParticals;
+            return listParticles;
         }
-        public List<string> GetListParticalsTitles()
+        public List<string> GetListParticlesTitles()
         {
-            return listParticalsTitles;
+            return listParticlesTitles;
         }
         public List<int> GetListThemeTypes()
         {
             return listThemeTypes;
         }
-        public List<int> GetListIndexLastParticalLines()
+        public List<int> GetListIndexLastParticlesLines()
         {
-            return listIndexLastParticalLines;
+            return listIndexLastParticleLines;
         }
         public int GetLinesEntryPercent()
         {

@@ -165,7 +165,7 @@ namespace litclassic
             }
             else if (comboBox2.SelectedIndex == 2)
             {
-                typeWrite = "only particals";
+                typeWrite = "only particles";
             }
         }
 
@@ -203,7 +203,7 @@ namespace litclassic
 
             backgroundWorker1.CancelAsync();
         }
-        private void backgroundWorker2_DeleteParticals(object sender, DoWorkEventArgs e)
+        private void backgroundWorker2_DeleteParticles(object sender, DoWorkEventArgs e)
         {
             if (listBox3.Items.Count != 0)
             {
@@ -222,7 +222,7 @@ namespace litclassic
                     var currentConnect = new BookDBConnect();
 
                     currentConnect.SetSQLConnectionToAzureDBLitClassicBooks();
-                    currentConnect.DeleteParticals(Convert.ToInt32(listBox3.Items[iListBox3]));
+                    currentConnect.DeleteParticles(Convert.ToInt32(listBox3.Items[iListBox3]));
                     currentProgress++;
                 }
 
@@ -290,7 +290,7 @@ namespace litclassic
         // удаление "частиц" по их номеру
         private void button3_Click(object sender, EventArgs e)
         {
-            backgroundWorker2.DoWork += new DoWorkEventHandler(backgroundWorker2_DeleteParticals);
+            backgroundWorker2.DoWork += new DoWorkEventHandler(backgroundWorker2_DeleteParticles);
 
             backgroundWorker2.RunWorkerAsync();
         }
