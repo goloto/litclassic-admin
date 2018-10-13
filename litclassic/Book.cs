@@ -37,6 +37,7 @@ namespace litclassic
         private MainForm form;
         private System.Timers.Timer currentTimer;
         private int currentProgressValue;
+        private int authorNum;
 
 
 
@@ -141,10 +142,12 @@ namespace litclassic
             // запуск таймера
             currentTimer.Start();
 
-            //ChangePhaseName("Запись данных в базу");
+            // определение автора
+            IdentificationAuthorNum();
 
             BookDBConnect currentDBConnect = new BookDBConnect();
 
+            // определение конечной базы данных для записи
             if (connectionString == "local")
             {
                 currentDBConnect.SetSQLConnectionToLocalDBBooks();
@@ -154,6 +157,8 @@ namespace litclassic
                 currentDBConnect.SetSQLConnectionToAzureDBLitClassicBooks();
             }
 
+            // определение полноты записи в базу данных
+            // полная запись
             if (typeWrite == "full write")
             {
                 // установка максимального значения прогресс бара
@@ -169,7 +174,6 @@ namespace litclassic
                 for (int iListLines = 0; iListLines < listLines.Count(); iListLines++)
                 {
                     currentDBConnect.WriteNewLine(bookID, listLines[iListLines]);
-                    //ChangeProgress(iListLines, listLines.Count());
                     currentProgressValue++;
                 }
 
@@ -182,16 +186,22 @@ namespace litclassic
                 for (int iListParticals = 0; iListParticals < partical.GetListParticals().Count(); iListParticals++)
                 {
                     currentDBConnect.WriteNewPartical(bookID,
+                        // описание "частицы"
                         partical.GetListParticalsTitles()[iListParticals],
+                        // текст "частицы"
                         partical.GetListParticals()[iListParticals],
+                        // индекс последней строки "частицы"
                         partical.GetListIndexLastParticalLines()[iListParticals],
-                        partical.GetListSumStrongConnections()[iListParticals]);
-                    //ChangeProgress(iListParticals, listLines.Count());
+                        // сумма связей "частицы"
+                        partical.GetListSumStrongConnections()[iListParticals],
+                        // автор и тип темы "частицы
+                        authorNum, partical.GetListThemeTypes()[iListParticals]);
                     currentProgressValue++;
                 }
 
                 currentDBConnect.WriteNewStatistic(bookID, partical.GetLinesEntryPercent());
             }
+            // запись только "частиц"
             else if (typeWrite == "only particals")
             {
                 // установка максимального значения прогресс бара
@@ -209,16 +219,22 @@ namespace litclassic
                 for (int iListParticals = 0; iListParticals < partical.GetListParticals().Count(); iListParticals++)
                 {
                     currentDBConnect.WriteNewPartical(bookID,
+                        // описание "частицы"
                         partical.GetListParticalsTitles()[iListParticals],
+                        // текст "частицы"
                         partical.GetListParticals()[iListParticals],
+                        // индекс последней строки "частицы"
                         partical.GetListIndexLastParticalLines()[iListParticals],
-                        partical.GetListSumStrongConnections()[iListParticals]);
-                    //ChangeProgress(iListParticals, listLines.Count());
+                        // сумма связей "частицы"
+                        partical.GetListSumStrongConnections()[iListParticals],
+                        // автор и тип темы "частицы
+                        authorNum, partical.GetListThemeTypes()[iListParticals]);
                     currentProgressValue++;
                 }
 
                 currentDBConnect.WriteNewStatistic(bookID, partical.GetLinesEntryPercent());
             }
+            // запись только строк книги
             else if (typeWrite == "only lines")
             {
                 // установка максимального значения прогресс бара
@@ -233,7 +249,6 @@ namespace litclassic
                 for (int iListLines = 0; iListLines < listLines.Count(); iListLines++)
                 {
                     currentDBConnect.WriteNewLine(bookID, listLines[iListLines]);
-                    //ChangeProgress(iListLines, listLines.Count());
                     currentProgressValue++;
                 }
 
@@ -1684,6 +1699,23 @@ namespace litclassic
         private void ClearLines()
         {
             
+        }
+        
+
+        private int IdentificationAuthorNum()
+        {
+            if (description.GetLastName().ToLower() == "достоевский") authorNum = 0;
+            else if (description.GetLastName().ToLower() == "пушкин") authorNum = 1;
+            else if (description.GetLastName().ToLower() == "гоголь") authorNum = 2;
+            else if (description.GetLastName().ToLower() == "жуковский") authorNum = 3;
+            else if (description.GetLastName().ToLower() == "державин") authorNum = 4;
+            else if (description.GetLastName().ToLower() == "лермонтов") authorNum = 5;
+            else if (description.GetLastName().ToLower() == "тютчев") authorNum = 6;
+            else if (description.GetLastName().ToLower() == "толстой") authorNum = 7;
+            else if (description.GetLastName().ToLower() == "гончаров") authorNum = 8;
+            else if (description.GetLastName().ToLower() == "ломоносов") authorNum = 9;
+
+            return authorNum;
         }
 
 
