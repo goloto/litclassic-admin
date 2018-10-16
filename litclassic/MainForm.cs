@@ -97,7 +97,7 @@ namespace litclassic
 
 
         // кнопка "Добавить книгу"
-        private void buttonBookAd_Click(object sender, EventArgs e) 
+        private void buttonBookAd_Click(object sender, EventArgs e)
         {
             openFileDialog1.ShowDialog();
 
@@ -107,7 +107,7 @@ namespace litclassic
                 //label2.Text = bookPath;
 
                 listBox2.Items.Add(bookPath);
-            }      
+            }
         }
         // кнопка "Внести данные в книгу"
         private void button1_Click_1(object sender, EventArgs e)
@@ -140,7 +140,7 @@ namespace litclassic
             else
             {
                 MessageBox.Show("В фоновом режиме уже выполняется операция.");
-            }      
+            }
         }
 
 
@@ -188,7 +188,7 @@ namespace litclassic
                 }
             }
 
-             backgroundWorker1.CancelAsync();
+            backgroundWorker1.CancelAsync();
         }
         private void backgroundWorker1_AddWords(object sender, DoWorkEventArgs e)
         {
@@ -217,7 +217,7 @@ namespace litclassic
                 currentTimer.Start();
 
                 //foreach (int ID in listBox3.Items)
-                for (int iListBox3 = 0; iListBox3 < listBox3.Items.Count; iListBox3++) 
+                for (int iListBox3 = 0; iListBox3 < listBox3.Items.Count; iListBox3++)
                 {
                     var currentConnect = new BookDBConnect();
 

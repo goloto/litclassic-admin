@@ -1712,8 +1712,8 @@ namespace litclassic
             else if (description.GetLastName().ToLower() == "лермонтов") authorNum = 5;
             else if (description.GetLastName().ToLower() == "тютчев") authorNum = 6;
             else if (description.GetLastName().ToLower() == "толстой") authorNum = 7;
-            else if (description.GetLastName().ToLower() == "гончаров") authorNum = 8;
-            else if (description.GetLastName().ToLower() == "ломоносов") authorNum = 9;
+            else if (description.GetLastName().ToLower() == "ломоносов") authorNum = 8;
+            else if (description.GetLastName().ToLower() == "гончаров") authorNum = 9;
 
             return authorNum;
         }
